@@ -6,13 +6,13 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        final int total = 64;
+        final int total = 16;
         Bracket bracket = new Bracket();
         for (int i = 1; i <= total; i++) {
             bracket.add(i);
         }
         bracket.orderBracket();
-        System.out.print(bracket.play() + " wins!");
+        System.out.print(bracket.play(false) + " wins!");
     }
 }
 
@@ -26,7 +26,10 @@ class Bracket {
     public void add(int num) {bracket.add(num);}
     public void remove(int num) {bracket.remove(num);}
 
-    public int getSeed(int seed) {return bracket.get(seed);}
+    public Integer getInt(int index) {
+        Integer val = bracket.get(index);
+        return val;
+    }
 
     public void orderBracket() {
         int bracketSize = bracket.size();
@@ -44,24 +47,32 @@ class Bracket {
         bracket = orderedBracket;
     }
 
-    public int play() {
+    public int play(boolean debug) {
         while (bracket.size() > 1) {
             print();
             for (int i = 0; i < bracket.size(); i++) {
-                Integer int1 = bracket.get(i);
-                Integer int2 = bracket.get(i+1);
-                //System.out.print(int1 + " vs " + int2 + ": ");
-                //chooses a random number between 1 and both numbers combined and eliminates which int it's in the range of
-                int score = 1 + (int)(Math.random() * (int1 + int2));
-                //System.out.print(score + ", ");
-                if (score <= int1) {
+                Integer int1 = getInt(i);
+                Integer int2 = getInt(i+1);
+                if (debug) System.out.print(int1 + " vs " + int2 + ": ");
+                if (int1 <= 0) {
                     bracket.remove(int1);
-                    //System.out.println(int2 + " wins");
-                }
-                else {
+                    if (debug) System.out.println(int2 + " on bye"); 
+                } else if (int2 <= 0) {
                     bracket.remove(int2);
-                    //System.out.println(int1 + " wins");
+                    if (debug) System.out.println(int1 + " on bye"); 
+                } else {
+                    //chooses a random number between 1 and both numbers combined and eliminates which int it's in the range of
+                    int score = 1 + (int)(Math.random() * (int1 + int2));
+                    if (debug) System.out.print(score + ", ");
+                    if (score <= int1) {
+                        bracket.remove(int1);
+                        if (debug) System.out.println(int2 + " wins");
+                    } else {
+                        bracket.remove(int2);
+                        if (debug) System.out.println(int1 + " wins");
+                    }
                 }
+                
             }
         }
         return bracket.get(0);
@@ -69,7 +80,7 @@ class Bracket {
 
     public void print() {
         for (int i = 0; i < bracket.size(); i++) {
-            System.out.print(bracket.get(i));
+            System.out.print(getInt(i));
             if (i % 2 == 0) System.out.print("/"); 
             else System.out.print(" ");
         }
