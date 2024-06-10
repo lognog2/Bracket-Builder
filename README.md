@@ -24,5 +24,5 @@
 - The eliminated number is simply removed from the bracket; The bracket will keep its structural integrity.
 - This repeats until one number is left, which is declared the winner.
 
-(1) Highest seed plays the lowest, second highest plays the second lowest, etc. Position in bracket remains constant each round
-(2) A perfect bracket has 2^n number of contestants (2, 4, 8, 16, etc) 
+- (1) Highest seed plays the lowest, second highest plays the second lowest, etc. Position in bracket remains constant each round
+- (2) A perfect bracket has 2^n number of contestants (2, 4, 8, 16, etc) 
